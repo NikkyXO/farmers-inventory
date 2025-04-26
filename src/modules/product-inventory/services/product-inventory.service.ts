@@ -35,7 +35,7 @@ export class ProductInventoryService {
     return this.productRepo.findOne({ _id: id });
   }
 
-  async updateProduct(id: string, numberChange: number) {
+  async updateQuantity(id: string, numberChange: number) {
     const product = await this.productRepo.findById(id)
     if (!product) {
       throw new BadRequestException('product doesnt exist')
@@ -47,6 +47,20 @@ export class ProductInventoryService {
 
   async getAllProducts() {
     return await this.productRepo.find();
+  }
+
+  async update(id: string, updateProductInventoryDto: UpdateProductInventoryDto) {
+    return await this.productRepo.updateOne(
+      { _id: id },
+      { ...updateProductInventoryDto},
+      {
+        new: true,
+      },
+    );
+  }
+
+  async remove(id: string) {
+    return await this.productRepo.deleteOne({ _id: id})
   }
 
   @Cron('0 8 * * *')

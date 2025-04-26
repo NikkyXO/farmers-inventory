@@ -7,7 +7,7 @@ import { Category } from '../entities/category.entity';
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectModel(Category.name) 
+    @InjectModel(Category.name)
     private categoryRepo: Model<Category>,
   ) {}
 
@@ -16,14 +16,11 @@ export class CategoryService {
   }
 
   async addCategory(data: CreateCategoryDto) {
-    console.log({ data })
     const category = new this.categoryRepo({
       ...data,
     });
-    console.log({ category })
     return await category.save();
   }
-
 
   findOne(id: string): Promise<Category | null> {
     return this.categoryRepo.findOne({ _id: id });
@@ -31,12 +28,12 @@ export class CategoryService {
 
   async updateCategory(id: string, data: any) {
     return await this.categoryRepo.updateOne(
-        { _id: id },
-        { ...data},
-        {
-          new: true,
-        },
-      );
+      { _id: id },
+      { ...data },
+      {
+        new: true,
+      },
+    );
   }
 
   async getAllCategories() {

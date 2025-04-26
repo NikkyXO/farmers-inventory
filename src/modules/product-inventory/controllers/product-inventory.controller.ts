@@ -45,11 +45,21 @@ export class ProductInventoryController {
     @Param('id') id: string,
     @Body() updateProductInventoryDto: UpdateProductInventoryDto,
   ) {
-    return this.productInventoryService.update(+id, updateProductInventoryDto);
+    return this.productInventoryService.update(id, updateProductInventoryDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productInventoryService.remove(+id);
+    return this.productInventoryService.remove(id);
+  }
+
+
+  @Patch(':id/add-quantity/:amount')
+  @UseGuards(JwtAuthGuard)
+  updateQuantity(
+    @Param('id') id: string,
+    @Param('id') amount: number,
+  ) {
+    return this.productInventoryService.updateQuantity(id, amount);
   }
 }
