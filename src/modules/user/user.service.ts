@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   Injectable,
   ConflictException,
@@ -34,9 +35,9 @@ export class UserService {
       });
 
       const newUser = await user.save();
-      return newUser['_doc'];
+      return newUser.toObject() as UserDocument;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      throw new BadRequestException(error?.message);
     }
   }
 

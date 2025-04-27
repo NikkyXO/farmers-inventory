@@ -13,7 +13,7 @@ import { ProductInventoryService } from '../services/product-inventory.service';
 import { CreateProductInventoryDto } from '../dto/create-product-inventory.dto';
 import { UpdateProductInventoryDto } from '../dto/update-product-inventory.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../auth/guards/auth.guard';
+import { IUser, JwtAuthGuard } from '../../auth/guards/auth.guard';
 import { Request } from 'express';
 
 @ApiBearerAuth('JWT')
@@ -29,9 +29,19 @@ export class ProductInventoryController {
     @Body() createProductInventoryDto: CreateProductInventoryDto,
     @Req() req: Request,
   ) {
-    const user = req.user as any;
+    const user = req.user as IUser;
     console.log('Authenticated user:', user);
-    return this.productInventoryService.addProduct(createProductInventoryDto, user.id);
+    return this.productInventoryService.addProduct(
+      createProductInventoryDto,
+      user._id,
+    );
+  }
+
+  @Get('')
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req: Request) {
+    const user = req.user as IUser;
+    return this.productInventoryService.findAll({ userId: user._id });
   }
 
   @Get(':id')
@@ -53,13 +63,9 @@ export class ProductInventoryController {
     return this.productInventoryService.remove(id);
   }
 
-
   @Patch(':id/add-quantity/:amount')
   @UseGuards(JwtAuthGuard)
-  updateQuantity(
-    @Param('id') id: string,
-    @Param('id') amount: number,
-  ) {
+  updateQuantity(@Param('id') id: string, @Param('id') amount: number) {
     return this.productInventoryService.updateQuantity(id, amount);
   }
 }

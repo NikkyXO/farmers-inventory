@@ -36,23 +36,25 @@ export class Product extends BaseEntity {
   tags: string[];
 
   @Prop({
-    required: true, default: 0,
+    required: true,
+    default: 0,
   })
   @ApiProperty()
   quantity: number;
 
   @Prop({
-    required: true, default: 5,
+    required: true,
+    default: 5,
   })
   @ApiProperty()
   @IsOptional()
   lowStockThreshold: number;
 
-  @Prop({ type: String, ref: 'Category'})
-  category: Category
+  @Prop({ type: String, ref: 'Category' })
+  category: Category;
 
-  @Prop({ type: String, ref: 'User'})
-  createdBy: User
+  @Prop({ type: String, ref: 'User' })
+  createdBy: User;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

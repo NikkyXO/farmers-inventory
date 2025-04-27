@@ -26,16 +26,11 @@ import { Module } from '@nestjs/common';
     }),
     AuthModule,
     UserModule,
-    AuthModule, UserModule, ProductInventoryModule,
+    AuthModule,
+    UserModule,
+    ProductInventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
-// implements OnModuleInit {
-//   constructor(private readonly seederService: SeederService) {}
-//   async onModuleInit() {
-//     await this.seederService.seedUsers();
-//     await this.seederService.seedMessages();
-//   }

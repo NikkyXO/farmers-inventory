@@ -35,8 +35,7 @@ export class BaseEntity {
 }
 
 export interface QueryProduct {
-  userId: string;
-  all?: boolean;
+  userId?: string;
 }
 
 export class UpdateQueryProduct {

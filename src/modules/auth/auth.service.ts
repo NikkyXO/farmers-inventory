@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDTO, NewUserInput } from './dto/auth.dto';
+import { IUser } from './guards/auth.guard';
 
 @Injectable()
 export class AuthService {
@@ -27,23 +28,25 @@ export class AuthService {
   }
 
   async login(user: LoginDTO) {
-    const userFound = await this.validateUser(user.email, user.password);
+    const userFound: IUser | null = await this.validateUser(
+      user.email,
+      user.password,
+    );
+
     if (!userFound) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const payload = { email: user.email, sub: userFound['_doc']._id };
 
+    const payload = { email: user.email, sub: userFound._id };
     return {
       accessToken: this.jwtService.sign(payload),
-      user: userFound['_doc'],
+      user: userFound['_doc'] as IUser,
     };
   }
 
   async register(data: NewUserInput) {
     const user = await this.userService.create(data);
     const { password: _, ...result } = user;
-    // seed test messages for the registered user once
-    // await this.messageService.seedTestMessages(user._id);
     return result;
   }
 }

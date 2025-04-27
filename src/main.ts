@@ -37,7 +37,14 @@ async function bootstrap() {
 
   await app.listen(port);
 }
-bootstrap().then(() => {
-  const logger = new Logger('Bootstrap');
-  logger.log('Inventory App started ');
-});
+
+bootstrap()
+  .then(() => {
+    const logger = new Logger('Bootstrap');
+    logger.log('Inventory App started');
+  })
+  .catch((error) => {
+    const logger = new Logger('Bootstrap');
+    logger.error('Failed to start Inventory App', error);
+    process.exit(1);
+  });
