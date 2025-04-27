@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { BaseEntity } from 'src/config/entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import { Category } from './category.entity';
