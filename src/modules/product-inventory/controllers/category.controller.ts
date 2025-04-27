@@ -10,11 +10,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
-import {
-  CreateCategoryDto,
-  CreateProductInventoryDto,
-} from '../dto/create-product-inventory.dto';
-import { UpdateProductInventoryDto } from '../dto/update-product-inventory.dto';
+import { CreateCategoryDto } from '../dto/create-product-inventory.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/guards/auth.guard';
 import { Request } from 'express';

@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateProductInventoryDto } from '../dto/create-product-inventory.dto';
-import { UpdateProductInventoryDto } from '../dto/update-product-inventory.dto';
+import {
+  CreateProductInventoryDto,
+  UpdateProductInventoryDto,
+} from '../dto/create-product-inventory.dto';
 import { Product } from '../entities/product.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -73,7 +75,7 @@ export class ProductInventoryService {
     return await this.productRepo.deleteOne({ _id: id });
   }
 
-  // @Cron('0 8 * * *')
+  @Cron('0 8 * * *')
   async notifyLowStockUsers() {
     const lowStockItems = await this.productRepo
       .find({

@@ -35,3 +35,22 @@ export class CreateProductInventoryDto {
   @Min(1)
   quantity: number;
 }
+
+export class UpdateProductInventoryDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({
+    example:
+      'Welcome to the inventory application!  You can start adding inventories.',
+  })
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @ApiProperty()
+  @IsOptional()
+  tags: string[];
+}

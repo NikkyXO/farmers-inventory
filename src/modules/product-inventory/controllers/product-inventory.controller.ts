@@ -10,13 +10,16 @@ import {
   Req,
 } from '@nestjs/common';
 import { ProductInventoryService } from '../services/product-inventory.service';
-import { CreateProductInventoryDto } from '../dto/create-product-inventory.dto';
-import { UpdateProductInventoryDto } from '../dto/update-product-inventory.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {
+  CreateProductInventoryDto,
+  UpdateProductInventoryDto,
+} from '../dto/create-product-inventory.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { IUser, JwtAuthGuard } from '../../auth/guards/auth.guard';
 import { Request } from 'express';
 
 @ApiBearerAuth('JWT')
+@ApiTags('Product-inventory')
 @Controller('product-inventory')
 export class ProductInventoryController {
   constructor(
@@ -65,7 +68,7 @@ export class ProductInventoryController {
 
   @Patch(':id/add-quantity/:amount')
   @UseGuards(JwtAuthGuard)
-  updateQuantity(@Param('id') id: string, @Param('id') amount: number) {
+  updateQuantity(@Param('id') id: string, @Param('amount') amount: number) {
     return this.productInventoryService.updateQuantity(id, amount);
   }
 }
